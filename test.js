@@ -1,7 +1,7 @@
 ﻿function DragSort(options) {
-  this.parent = options.element; // 父级元素
-  this.isPointerdown = false; // 标识鼠标是否已经按下
-  this.diff = { y: 0 }; // 相对于上一次移动差值
+  this.parent = options.element; 
+  this.isPointerdown = false; 
+  this.diff = { y: 0 };
   this.drag = {
     element: null,
     getText: 0,
@@ -12,12 +12,12 @@
   }; // 拖拽元素
   this.cllapse = { element: null, getText: 0, y: 0 }; 
   this.lastPointermove = { y: 0 };
-  this.area = null; // 用来控制鼠标是否进入了元素区域
-  this.rectList = []; // 用于保存拖拽项getBoundingClientRect()方法获得的元素虚拟位置
-  this.allDom = []; // 真实变动位置的dom
-  this.getRect(); // 实例化后，立即记录元素的初始位置
-  this.bindEventListener(); // 绑定方法
-  this.elementDistance = 0; // 记录碰撞元素偏离的距离
+  this.area = null; 
+  this.rectList = [];
+  this.allDom = []; 
+  this.getRect();
+  this.bindEventListener(); 
+  this.elementDistance = 0; 
   this.locateParent = this.parent.getBoundingClientRect();
   this.selectNumbers = 0;
 }
@@ -41,19 +41,13 @@ DragSort.prototype.getRect = function () {
 
 // 绑定监听
 DragSort.prototype.bindEventListener = function () {
-  // 一、将函数的this都指向实例。如果不绑定函数的指向，监听事件会修改第2个参数this指向为this.parent
   this.handlePointerdown = this.handlePointerdown.bind(this);
   this.handlePointermove = this.handlePointermove.bind(this);
   this.handlePointerup = this.handlePointerup.bind(this);
   this.getRect = this.getRect.bind(this);
-  // 二、三种实例方法：按下pointerdown、移动pointermove、松开pointerup
-  // 1.父元素ul监听鼠标左键按下操作，addEventListener默认是事件冒泡行为，到底是谁触发了事件的发生？精确的某个子元素。
   this.parent.addEventListener("pointerdown", this.handlePointerdown);
-  // 2.父元素ul监听鼠标移动
   this.parent.addEventListener("pointermove", this.handlePointermove);
-  // 3.父元素ul监听鼠标左键松开
   this.parent.addEventListener("pointerup", this.handlePointerup);
-  // 4.监听父级元素是否双指点击了（未奏效）
   this.parent.addEventListener("touchstart", function (e) {
     // document.write(e.touches.length)
     if (e.touches.length > 2) {
